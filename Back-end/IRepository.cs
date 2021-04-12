@@ -6,9 +6,9 @@ using System.Numerics;
 public interface IRepository<T>
 {
     Task<IEnumerable<T>> GetAll();
-    Task<T> Get(long id);
-    Task Delete(long id);
-    Task<T> Update(T t);
-    Task<T> Insert(T t);
+    // Task<T> Get(long id);
+    // Task Delete(long id);
+    // Task<T> Update(T t);
+    // Task<T> Insert(T t);
 
 }
