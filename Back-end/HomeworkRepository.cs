@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using System.Numerics;
 
 
-public class PupilRepository : BaseRepository, IRepository<Homework>
+public class HomeworkRepository : BaseRepository, IHomework<Homework>
 {
 
-    public PupilRepository(IConfiguration configuration) : base(configuration) { }
+    public HomeworkRepository(IConfiguration configuration) : base(configuration) { }
 
     public async Task<IEnumerable<Homework>> GetAll()
     {
         using var connection = CreateConnection();
-        IEnumerable<Homework> pupils = await connection.QueryAsync<Homework>("SELECT * FROM Homework;");
-        return pupils;
+        IEnumerable<Homework> homework = await connection.QueryAsync<Homework>("SELECT * FROM Homework;");
+        return homework;
     }
 
     // public async Task Delete(long id)
@@ -35,9 +35,9 @@ public class PupilRepository : BaseRepository, IRepository<Homework>
     //     return await connection.QuerySingleAsync<Pupil>("UPDATE Pupils SET Name = @Name, Dob = @Dob, Avatar = @Avatar WHERE Id = @Id RETURNING *", pupil);
     // }
 
-    // public async Task<Pupil> Insert(Pupil pupil)
-    // {
-    //     using var connection = CreateConnection();
-    //     return await connection.QuerySingleAsync<Pupil>("INSERT INTO Pupils (Name, Dob, Avatar) VALUES (@Name, @Dob, @Avatar) RETURNING *;", pupil);
-    // }
+    public async Task<Homework> Insert(Homework pupil)
+    {
+        using var connection = CreateConnection();
+        return await connection.QuerySingleAsync<Homework>("INSERT INTO Pupils (Name, Dob, Avatar) VALUES (@Name, @Dob, @Avatar) RETURNING *;", pupil);
+    }
 }

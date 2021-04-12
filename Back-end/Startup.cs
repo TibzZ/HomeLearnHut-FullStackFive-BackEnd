@@ -25,7 +25,11 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
 
-        services.AddTransient<IRepository<Homework>, PupilRepository>();
+        services.AddTransient<IHomework<Homework>, HomeworkRepository>();
+        services.AddTransient<IClassroom<Homework>, ClassroomRepository>();
+
+        // services.AddTransient<IClassroom<Classroom>, ClassroomRepository>();
+
         services.AddControllers();
         services.AddCors(options =>
         {

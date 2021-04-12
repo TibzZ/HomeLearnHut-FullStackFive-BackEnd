@@ -6,14 +6,14 @@ using System.Numerics;
 
 
 [ApiController]
-[Route("pupils")]
-public class PupilController : ControllerBase
+[Route("[controller]")]
+public class ClassroomController : ControllerBase
 {
-    private readonly IRepository<Homework> _pupilRepository;
+    private readonly IClassroom<Homework> _classroomRepository;
 
-    public PupilController(IRepository<Homework> pupilRepository)
+    public ClassroomController(IClassroom<Homework> classroomRepository)
     {
-        _pupilRepository = pupilRepository;
+        _classroomRepository = classroomRepository;
     }
 
     [HttpGet]
@@ -21,7 +21,7 @@ public class PupilController : ControllerBase
     {
         try
         {
-            var allPupils = await _pupilRepository.GetAll();
+            var allPupils = await _classroomRepository.GetAll();
             return Ok(allPupils);
         }
         catch (Exception)
