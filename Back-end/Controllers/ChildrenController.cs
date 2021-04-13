@@ -7,13 +7,14 @@ using System.Numerics;
 
 [ApiController]
 [Route("[controller]")]
-public class ClassroomController : ControllerBase
+// [Route("children")]
+public class ChildrenController : ControllerBase
 {
-    private readonly IClassroom<Homework> _classroomRepository;
+    private readonly IChildren<Children> _childrenRepository;
 
-    public ClassroomController(IClassroom<Homework> classroomRepository)
+    public ChildrenController(IChildren<Children> childrenRepository)
     {
-        _classroomRepository = classroomRepository;
+        _childrenRepository = childrenRepository;
     }
 
 
@@ -23,8 +24,8 @@ public class ClassroomController : ControllerBase
     {
         try
         {
-            var homework = await _classroomRepository.Get(id);
-            return Ok(homework);
+            var children = await _childrenRepository.Get(id);
+            return Ok(children);
         }
         catch (Exception)
         {
@@ -35,11 +36,11 @@ public class ClassroomController : ControllerBase
 
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(long id, [FromBody] Homework homework)
+    public async Task<IActionResult> Update(long id, [FromBody] Children homework)
     {
         try
         {
-            var editPupil = await _classroomRepository.Update(new Homework { Id = 1 });
+            var editPupil = await _childrenRepository.Update(new Children { Id = 1 });
             return Ok(editPupil);
         }
         catch (Exception error)

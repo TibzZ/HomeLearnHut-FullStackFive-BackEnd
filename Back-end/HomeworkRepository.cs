@@ -22,6 +22,7 @@ public class HomeworkRepository : BaseRepository, IHomework<Homework>
         // // iterate through the list and add it to the homework
         for (int i = 0; i < homework.Count; i++)
         {
+
             homework[i].children = (List<Children>)await connection.QueryAsync<Children>(@"select (children.id, children.name, children.avatar,
 childrensHomework.childId,
 childrensHomework.image,childrensHomework.comment, childrensHomework.annotation

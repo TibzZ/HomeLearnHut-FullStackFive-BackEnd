@@ -5,6 +5,8 @@ public class Homework
     public long? Id { get; set; }
     public string Name { get; set; }
     public string Image { get; set; }
+
+    // to implement later once we have figured out how to synchronize SQL and C# Dates
     //  public string Dateset { get; set; }
 
     public string Datedue { get; set; }

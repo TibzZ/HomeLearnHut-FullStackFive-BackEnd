@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using System.Numerics;
 
 
-public interface IClassroom<T>
+public interface IChildren<T>
 {
-    Task<T> Get(long id);
+    Task<IEnumerable<T>> Get(long id);
 
     Task<T> Update(T t);
 

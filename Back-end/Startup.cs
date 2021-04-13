@@ -26,7 +26,7 @@ public class Startup
     {
 
         services.AddTransient<IHomework<Homework>, HomeworkRepository>();
-        services.AddTransient<IClassroom<Homework>, ClassroomRepository>();
+        services.AddTransient<IChildren<Children>, ChildrenRepository>();
 
         // services.AddTransient<IClassroom<Classroom>, ClassroomRepository>();
 
