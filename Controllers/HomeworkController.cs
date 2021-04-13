@@ -26,7 +26,6 @@ public class HomeworkController : ControllerBase
         }
         catch (Exception)
         {
-            return NoContent();
             return BadRequest();
         }
     }

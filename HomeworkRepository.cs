@@ -4,6 +4,7 @@ using Dapper;
 using System.Threading.Tasks;
 using System.Numerics;
 using System.Linq;
+using System;
 
 public class HomeworkRepository : BaseRepository, IHomework<Homework>
 {
@@ -49,18 +50,20 @@ children.id = childrensHomework.childId
         using var connection = CreateConnection();
 
         // create homework record, returning just the id of the object
-        Homework hw = await connection.QuerySingleAsync<Homework>("INSERT INTO homework (Name,Image,Datedue,Comment) VALUES (@Name,@Image,@Datedue,@Comment) RETURNING id;", homework);
+        long homeworkId = await connection.QuerySingleAsync<long>("INSERT INTO homework (Name,Image,Datedue,Comment) VALUES (@Name,@Image,@Datedue,@Comment) RETURNING id;", homework);
 
         // get the empty "classroom" from the children table
-        List<Child> children = (List<Child>)await connection.QueryAsync<Child>(@"select * from childrenWHERE id=@homeworkId;", hw.Id);
+        List<Child> children = (List<Child>)await connection.QueryAsync<Child>(@"select * from children;");
 
-
+        Console.WriteLine("Got children!");
+        Console.WriteLine("child 1 is " + children[0].Name);
         // Now do the INSERTS for the linking database
         foreach (Child child in children)
         {
+            Console.WriteLine("insert child");
             //  INSERT INTO childrensHomework (homeworkid,childid) VALUES ()
-            await connection.QuerySingleAsync<Homework>("INSERT INTO childrensHomework (homeworkid,childid) VALUES (@HomeworkId,@ChildId);"
-            , new { HomeworkId = hw.Id, ChildId = child.Id });
+            await connection.ExecuteAsync("INSERT INTO childrensHomework (homeworkid,childid) VALUES (@HomeworkId,@ChildId);"
+            , new { HomeworkId = homeworkId, ChildId = child.Id });
         }
 
     }
@@ -69,7 +72,8 @@ children.id = childrensHomework.childId
     public async void Update(long id, long childId, string image, string comment, string annotation)
     {
         using var connection = CreateConnection();
-        await connection.QuerySingleAsync<Child>(@"UPDATE childrensHomework 
+
+        await connection.ExecuteAsync(@"UPDATE childrensHomework 
         SET image = @Image, comment = @Comment, annotation = @Annotation
          WHERE homeworkid= @HomeworkId AND childid = @ChildId;",
          new
