@@ -1,7 +1,12 @@
 --- In progress
 
-select (id, name, avatar) from children
+select (children.id, children.name, children.avatar,
+childrensHomework.childId,
+childrensHomework.image,childrensHomework.comment, childrensHomework.annotation
+) from children
 FULL OUTER JOIN
-(select * from childrensHomework)
-ON
-id = childId;
+childrensHomework
+on
+children.id = childrensHomework.childId
+    where childrensHomework.homeworkId=1;
+;
