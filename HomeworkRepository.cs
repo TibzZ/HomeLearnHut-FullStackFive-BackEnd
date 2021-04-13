@@ -23,17 +23,16 @@ public class HomeworkRepository : BaseRepository, IHomework<Homework>
         for (int i = 0; i < homework.Count; i++)
         {
 
-            homework[i].children = (List<Children>)await connection.QueryAsync<Children>(@"select (children.id, children.name, children.avatar,
-childrensHomework.childId,
-childrensHomework.image,childrensHomework.comment, childrensHomework.annotation
-) from children
+            homework[i].children = (List<Child>)await connection.QueryAsync<Child>(@"
+select children.id, children.name, children.avatar, childrensHomework.image,childrensHomework.comment, childrensHomework.annotation
+from children
 FULL OUTER JOIN
 childrensHomework
 on
 children.id = childrensHomework.childId
-    where childrensHomework.homeworkId=1;
-;
-");
+ where homeworkId=@Id;", new { Id = homework[i].Id });
+
+
         }
 
 
@@ -43,32 +42,45 @@ children.id = childrensHomework.childId
     }
 
 
-
-    public async Task<Homework> Insert(Homework pupil)
+    // Upload homework
+    //Task<Homework>
+    public async void Insert(Homework homework)
     {
         using var connection = CreateConnection();
-        return await connection.QuerySingleAsync<Homework>("INSERT INTO Pupils (Name, Dob, Avatar) VALUES (@Name, @Dob, @Avatar) RETURNING *;", pupil);
+
+        // create homework record, returning just the id of the object
+        Homework hw = await connection.QuerySingleAsync<Homework>("INSERT INTO homework (Name,Image,Datedue,Comment) VALUES (@Name,@Image,@Datedue,@Comment) RETURNING id;", homework);
+
+        // get the empty "classroom" from the children table
+        List<Child> children = (List<Child>)await connection.QueryAsync<Child>(@"select * from childrenWHERE id=@homeworkId;", hw.Id);
+
+
+        // Now do the INSERTS for the linking database
+        foreach (Child child in children)
+        {
+            //  INSERT INTO childrensHomework (homeworkid,childid) VALUES ()
+            await connection.QuerySingleAsync<Homework>("INSERT INTO childrensHomework (homeworkid,childid) VALUES (@HomeworkId,@ChildId);"
+            , new { HomeworkId = hw.Id, ChildId = child.Id });
+        }
+
     }
+
+    // Update is for Mark and Reject
+    public async void Update(long id, long childId, string image, string comment, string annotation)
+    {
+        using var connection = CreateConnection();
+        await connection.QuerySingleAsync<Child>(@"UPDATE childrensHomework 
+        SET image = @Image, comment = @Comment, annotation = @Annotation
+         WHERE homeworkid= @HomeworkId AND childid = @ChildId;",
+         new
+         {
+             HomeworkId = id,
+             ChildId = childId,
+             Image = image,
+             Comment = comment,
+             Annotation = annotation
+         });
+    }
+
+
 }
-
-
-
-// JUNK code
-
-// public async Task Delete(long id)
-// {
-//     using var connection = CreateConnection();
-//     await connection.ExecuteAsync("DELETE FROM Pupils WHERE Id = @Id;", new { Id = id });
-// }
-
-// public async Task<Pupil> Get(long id)
-// {
-//     using var connection = CreateConnection();
-//     return await connection.QuerySingleAsync<Pupil>("SELECT * FROM Pupils WHERE Id = @Id;", new { Id = id });
-// }
-
-// public async Task<Pupil> Update(Pupil pupil)
-// {
-//     using var connection = CreateConnection();
-//     return await connection.QuerySingleAsync<Pupil>("UPDATE Pupils SET Name = @Name, Dob = @Dob, Avatar = @Avatar WHERE Id = @Id RETURNING *", pupil);
-// }

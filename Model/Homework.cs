@@ -12,7 +12,7 @@ public class Homework
     public string Datedue { get; set; }
     public string Comment { get; set; }
 
-    public List<Children> children { get; set; }
+    public List<Child> children { get; set; }
 
 
 }

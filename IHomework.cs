@@ -6,9 +6,11 @@ using System.Numerics;
 public interface IHomework<T>
 {
     Task<IEnumerable<T>> GetAll();
-    // Task<T> Get(long id);
-    // Task Delete(long id);
-    // Task<T> Update(T t);
-    Task<T> Insert(T t);
+
+    void Insert(T t);
+
+    //void Update(long id, T t);
+
+    void Update(long id, long childId, string image, string comment, string annotation);
 
 }
