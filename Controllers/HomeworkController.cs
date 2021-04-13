@@ -31,16 +31,18 @@ public class HomeworkController : ControllerBase
     }
 
     [HttpPost]
-    public async void Insert([FromBody] Homework homework)
+    public async Task<IActionResult> Insert([FromBody] Homework homework)
     {
         try
         {
             _homeworkRepository.Insert(homework);
+            return await GetAll();
         }
         catch (Exception error)
         {
             Console.WriteLine(error.Message);
             Console.WriteLine(error.StackTrace);
+            return BadRequest();
 
         }
     }
@@ -48,17 +50,19 @@ public class HomeworkController : ControllerBase
 
 
     [HttpPut("{id}")]
-    public async void Update(long id, [FromBody] Child child)
+    public async Task<IActionResult> Update(long id, [FromBody] Child child)
     {
         try
         {
             _homeworkRepository.Update(id, child.Id, child.Image, child.Comment, child.Annotation);
+            return await GetAll();
 
         }
         catch (Exception error)
         {
             Console.WriteLine(error.Message);
             Console.WriteLine(error.StackTrace);
+            return BadRequest();
         }
 
     }
