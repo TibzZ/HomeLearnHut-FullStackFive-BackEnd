@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class Homework
 {
     public long? Id { get; set; }
@@ -7,5 +9,8 @@ public class Homework
 
     public string Datedue { get; set; }
     public string Comment { get; set; }
+
+    public List<Children> children { get; set; }
+
 
 }

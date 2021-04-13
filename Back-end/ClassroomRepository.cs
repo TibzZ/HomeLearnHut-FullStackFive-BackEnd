@@ -10,34 +10,19 @@ public class ClassroomRepository : BaseRepository, IClassroom<Homework>
 
     public ClassroomRepository(IConfiguration configuration) : base(configuration) { }
 
-    public async Task<IEnumerable<Homework>> GetAll()
+    // more complex needed
+    public async Task<Homework> Get(long id)
     {
         using var connection = CreateConnection();
-        IEnumerable<Homework> pupils = await connection.QueryAsync<Homework>("SELECT * FROM Homework;");
-        return pupils;
+        return await connection.QuerySingleAsync<Homework>("SELECT * FROM Homework WHERE Id = @Id;", new { Id = id });
     }
 
-    // public async Task Delete(long id)
-    // {
-    //     using var connection = CreateConnection();
-    //     await connection.ExecuteAsync("DELETE FROM Pupils WHERE Id = @Id;", new { Id = id });
-    // }
-
-    // public async Task<Pupil> Get(long id)
-    // {
-    //     using var connection = CreateConnection();
-    //     return await connection.QuerySingleAsync<Pupil>("SELECT * FROM Pupils WHERE Id = @Id;", new { Id = id });
-    // }
-
-    // public async Task<Pupil> Update(Pupil pupil)
-    // {
-    //     using var connection = CreateConnection();
-    //     return await connection.QuerySingleAsync<Pupil>("UPDATE Pupils SET Name = @Name, Dob = @Dob, Avatar = @Avatar WHERE Id = @Id RETURNING *", pupil);
-    // }
-
-    public async Task<Homework> Insert(Homework pupil)
+    public async Task<Homework> Update(Homework homework)
     {
         using var connection = CreateConnection();
-        return await connection.QuerySingleAsync<Homework>("INSERT INTO Pupils (Name, Dob, Avatar) VALUES (@Name, @Dob, @Avatar) RETURNING *;", pupil);
+        return await connection.QuerySingleAsync<Homework>("SELECT * FROM Homework WHERE Id = @Id;", homework);
+        // using var connection = CreateConnection();
+        // return await connection.QuerySingleAsync<Homework>("UPDATE Pupils SET Name = @Name, Dob = @Dob, Avatar = @Avatar WHERE Id = @Id RETURNING *", pupil);
     }
+
 }
