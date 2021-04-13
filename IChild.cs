@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using System.Numerics;
 
 
-public interface IChildren<T>
+public interface IChild<T>
 {
     Task<IEnumerable<T>> Get(long id);
 
-    Task<T> Update(T t);
+
 
     // Task<IEnumerable<T>> GetAll();
     // // Task<T> Get(long id);
