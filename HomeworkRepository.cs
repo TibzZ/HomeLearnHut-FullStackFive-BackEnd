@@ -31,7 +31,7 @@ FULL OUTER JOIN
 childrensHomework
 on
 children.id = childrensHomework.childId
- where homeworkId=@Id;", new { Id = homework[i].Id });
+ where homeworkId=@Id ORDER BY id;", new { Id = homework[i].Id });
 
 
         }
