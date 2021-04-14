@@ -27,8 +27,6 @@ public class Startup
 
         services.AddTransient<IHomework<Homework>, HomeworkRepository>();
 
-        // services.AddTransient<IClassroom<Classroom>, ClassroomRepository>();
-
         services.AddControllers();
         services.AddCors(options =>
         {
