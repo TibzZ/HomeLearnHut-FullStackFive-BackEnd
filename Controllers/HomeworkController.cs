@@ -31,39 +31,32 @@ public class HomeworkController : ControllerBase
     }
 
     [HttpPost]
-    public async void Insert([FromBody] Homework homework)
+    public async Task Insert([FromBody] Homework homework)
     {
         try
         {
-            _homeworkRepository.Insert(homework);
-
+            await _homeworkRepository.Insert(homework);
         }
         catch (Exception error)
         {
             Console.WriteLine(error.Message);
             Console.WriteLine(error.StackTrace);
-
         }
     }
 
 
 
     [HttpPut("{id}")]
-    public async void Update(long id, [FromBody] Child child)
+    public async Task Update(long id, [FromBody] Child child)
     {
         try
         {
-            _homeworkRepository.Update(id, child.Id, child.Image, child.Comment, child.Annotation);
-
-
+            await _homeworkRepository.Update(id, child.Id, child.Image, child.Comment, child.Annotation);
         }
         catch (Exception error)
         {
             Console.WriteLine(error.Message);
             Console.WriteLine(error.StackTrace);
         }
-
     }
-
-
 }

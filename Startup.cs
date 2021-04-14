@@ -24,9 +24,7 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-
         services.AddTransient<IHomework<Homework>, HomeworkRepository>();
-
         services.AddControllers();
         services.AddCors(options =>
         {
@@ -41,20 +39,8 @@ public class Startup
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        // if (env.IsDevelopment())
-        // {
-        //     app.UseDeveloperExceptionPage();
-        //     app.UseSwagger();
-        //     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Back_end v1"));
-        // }
-
-        // app.UseHttpsRedirection();
-
         app.UseRouting();
         app.UseCors();
-
-        //app.UseAuthorization();
-
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
