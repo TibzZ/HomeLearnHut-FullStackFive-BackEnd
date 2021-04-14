@@ -9,7 +9,6 @@ public interface IHomework<T>
 
     void Insert(T t);
 
-    //void Update(long id, T t);
 
     void Update(long id, long childId, string image, string comment, string annotation);
 
