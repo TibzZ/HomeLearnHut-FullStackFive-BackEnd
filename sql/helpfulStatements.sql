@@ -6,6 +6,7 @@ select * from homework;
 DELETE FROM homework WHERE id >18 ;
 
 -- Test JSON data
+
 -- Test INSERT (upload) Homework
 -- {"Name":"TestName","Image":"https://homelearnhut.s3.eu-west-2.amazonaws.com/done/m-RE.png","DateDue":"TestDate","Comment":"TestComment"}
 
