@@ -7,7 +7,7 @@ comment TEXT,
 annotation TEXT
 );
 
-INSERT INTO childrensHomework (childId, homeworkId, image, comment, annotation)
+INSERT INTO childrensHomework (homeworkId, childId, image, comment, annotation)
  VALUES
  (1,1, 'https://homelearnhut.s3.eu-west-2.amazonaws.com/done/m-eng.png' , null , null )
 , (1,2, 'https://homelearnhut.s3.eu-west-2.amazonaws.com/done/m-eng.png' , null , null )
