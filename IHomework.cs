@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Numerics;
 
 public interface IHomework<T>
 {

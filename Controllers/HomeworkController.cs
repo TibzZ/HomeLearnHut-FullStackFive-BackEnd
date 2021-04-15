@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using System.Numerics;
-
 
 [ApiController]
 [Route("[controller]")]
@@ -43,8 +40,6 @@ public class HomeworkController : ControllerBase
             Console.WriteLine(error.StackTrace);
         }
     }
-
-
 
     [HttpPut("{id}")]
     public async Task Update(long id, [FromBody] Child child)

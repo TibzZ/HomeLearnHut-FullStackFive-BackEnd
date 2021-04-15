@@ -2,9 +2,6 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Dapper;
 using System.Threading.Tasks;
-using System.Numerics;
-using System.Linq;
-using System;
 
 public class HomeworkRepository : BaseRepository, IHomework<Homework>
 {
